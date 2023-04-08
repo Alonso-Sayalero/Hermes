@@ -9,5 +9,5 @@ body {
   background-size: cover;
   /* background by SVGBackgrounds.com */
 
-  @apply text-neutral-950;
+  @apply h-screen text-neutral-950;
 }
