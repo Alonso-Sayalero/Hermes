@@ -3,6 +3,10 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import { Navbar } from "~/components/navbar";
 
+const Dashboard = () => {
+  return <div>Estas Loggeado!!!</div>;
+};
+
 const Home: NextPage = () => {
   const { isLoaded: userLoaded, isSignedIn } = useUser();
 
@@ -17,6 +21,7 @@ const Home: NextPage = () => {
       </Head>
       <main className="">
         <Navbar isAuth={isSignedIn} />
+        {!!isSignedIn && <Dashboard />}
       </main>
     </>
   );
