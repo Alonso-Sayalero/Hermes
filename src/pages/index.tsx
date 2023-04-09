@@ -2,12 +2,15 @@ import { useUser } from "@clerk/nextjs";
 import { type NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
-import { Navbar } from "~/components/navbar";
+import { Navbar } from "~/components/Navbar";
+import { NoteEditor } from "~/components/NoteEditor";
 import { api, type RouterOutputs } from "~/utils/api";
 
 type Topic = RouterOutputs["topic"]["getAll"][0];
 
 const Dashboard = () => {
+  const [selectedTopic, setSelectedTopic] = useState<Topic | null>(null);
+
   const { data: topics, refetch: refetchTopics } = api.topic.getAll.useQuery(
     undefined,
     {
@@ -17,11 +20,22 @@ const Dashboard = () => {
     }
   );
 
-  const [selectedTopic, setSelectedTopic] = useState<Topic | null>(null);
+  const { data: notes, refetch: refetchNotes } = api.note.getAll.useQuery(
+    {
+      topicId: selectedTopic?.id ?? "",
+    },
+    { enabled: selectedTopic !== null }
+  );
 
   const createTopic = api.topic.create.useMutation({
     onSuccess: () => {
       void refetchTopics();
+    },
+  });
+
+  const createNote = api.note.create.useMutation({
+    onSuccess: () => {
+      void refetchNotes();
     },
   });
 
@@ -59,7 +73,17 @@ const Dashboard = () => {
           ))}
         </ul>
       </div>
-      <div className="col-span-3"></div>
+      <div className="col-span-3 overscroll-auto">
+        <NoteEditor
+          onSave={({ title, content }) => {
+            createNote.mutate({
+              title,
+              content,
+              topicId: selectedTopic?.id ?? "",
+            });
+          }}
+        />
+      </div>
     </div>
   );
 };
