@@ -27,7 +27,9 @@ export const Navbar = (props: { isAuth: boolean }) => {
   return (
     <div className="flex justify-between bg-sky-200">
       <div className="flex">
-        <span className="m-2 text-xl font-semibold tracking-tight">Hermes</span>
+        <span className="m-2 text-4xl font-semibold tracking-tight">
+          Hermes
+        </span>
       </div>
       {!props.isAuth && <LoginRegisterButtons />}
       {!!props.isAuth && <SignOutCSSedButton />}
