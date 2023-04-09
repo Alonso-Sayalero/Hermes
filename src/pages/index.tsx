@@ -31,7 +31,7 @@ const Dashboard = () => {
         <span className="m-1 text-2xl font-bold">Temas</span>
         <input
           type="text"
-          className="w-full"
+          className="focus:shadow-outline mb-3 w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline focus:outline-sky-200"
           placeholder="Nuevo Tema"
           onKeyDown={(e) => {
             if (e.key === "Enter") {
@@ -46,6 +46,7 @@ const Dashboard = () => {
           {topics?.map((topic) => (
             <li key={topic.id}>
               <a
+                className="my-1 block rounded border border-white px-4 py-2 hover:border-gray-200 hover:bg-gray-200"
                 href="#"
                 onClick={(evt) => {
                   evt.preventDefault();
