@@ -5,9 +5,9 @@ generator client {
   provider = "prisma-client-js"
 }
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url = env("DATABASE_URL")
-  relationMode = "prisma"
+  relationMode = "foreignKeys"
 }
 
 model Topic {
@@ -17,8 +17,6 @@ model Topic {
   title String
   authorId String
   notes Note[]
-
-  @@index([authorId])
 }
 
 model Note {
@@ -29,6 +27,4 @@ model Note {
   content String @db.Text
   topic Topic @relation(fields: [topicId], references: [id])
   topicId String
-
-  @@index([topicId])
 }

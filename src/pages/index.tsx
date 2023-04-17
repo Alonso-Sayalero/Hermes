@@ -40,7 +40,7 @@ const Dashboard = () => {
   });
 
   return (
-    <div className="mx-5 mt-5 grid grid-cols-4 gap-2">
+    <div className="mx-5 mt-5 grid grid-cols-5 gap-2">
       <div className="overscroll-auto px-2">
         <span className="m-1 text-2xl font-bold">Temas</span>
         <input
@@ -73,7 +73,7 @@ const Dashboard = () => {
           ))}
         </ul>
       </div>
-      <div className="col-span-3 overscroll-auto">
+      <div className="col-span-4">
         <NoteEditor
           onSave={({ title, content }) => {
             createNote.mutate({

@@ -15,12 +15,14 @@ export const NoteEditor = ({
   return (
     <div>
       <input
+        className="mb-3 w-full"
         type="text"
         placeholder="Titulo de la nota"
         value={title}
         onChange={(e) => setTitle(e.currentTarget.value)}
       />
       <ReactCodeMirror
+        className="mb-3"
         minHeight="30vh"
         minWidth="100%"
         value={content}
@@ -29,16 +31,18 @@ export const NoteEditor = ({
         ]}
         onChange={(value) => setContent(value)}
       />
-      <button
-        onClick={() => {
-          onSave({ title, content });
-          setContent("");
-          setTitle("");
-        }}
-        disabled={title.trim().length === 0 || content.trim().length === 0}
-      >
-        Guardar
-      </button>
+      {!(title.trim().length === 0 || content.trim().length === 0) && (
+        <button
+          className="rounded border bg-sky-200 px-5 py-3"
+          onClick={() => {
+            onSave({ title, content });
+            setContent("");
+            setTitle("");
+          }}
+        >
+          Guardar
+        </button>
+      )}
     </div>
   );
 };
