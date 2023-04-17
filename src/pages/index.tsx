@@ -3,6 +3,7 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
 import { Navbar } from "~/components/Navbar";
+import { NoteCard } from "~/components/NoteCard";
 import { NoteEditor } from "~/components/NoteEditor";
 import { api, type RouterOutputs } from "~/utils/api";
 
@@ -34,6 +35,12 @@ const Dashboard = () => {
   });
 
   const createNote = api.note.create.useMutation({
+    onSuccess: () => {
+      void refetchNotes();
+    },
+  });
+
+  const deleteNote = api.note.delete.useMutation({
     onSuccess: () => {
       void refetchNotes();
     },
@@ -74,6 +81,17 @@ const Dashboard = () => {
         </ul>
       </div>
       <div className="col-span-4">
+        <div>
+          {notes?.map((note) => (
+            <div key={note.id} className="mt-5">
+              <NoteCard
+                note={note}
+                onDelete={() => void deleteNote.mutate({ id: note.id })}
+              />
+            </div>
+          ))}
+        </div>
+
         <NoteEditor
           onSave={({ title, content }) => {
             createNote.mutate({
